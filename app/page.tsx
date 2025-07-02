@@ -38,12 +38,12 @@ export default function Home() {
 
     return dir ? `${dir}/${name}` : name;
   }
+  const basePath =
+    process.env.NODE_ENV === "production" ? "/bedrock-textures" : "";
 
   useEffect(() => {
     const fetchTextures = async () => {
       try {
-        const basePath =
-          process.env.NODE_ENV === "production" ? "/bedrock-textures" : "";
         const response = await fetch(`${basePath}/texture_list.json`);
         const data: string[] = await response.json();
 
@@ -147,7 +147,7 @@ export default function Home() {
                           <Image
                             alt={texture.name}
                             height={32}
-                            src={`/${texture.path}`}
+                            src={`${basePath}/${texture.path}`}
                             width={32}
                           />
                         </div>
