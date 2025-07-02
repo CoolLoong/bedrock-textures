@@ -42,7 +42,9 @@ export default function Home() {
   useEffect(() => {
     const fetchTextures = async () => {
       try {
-        const response = await fetch("/texture_list.json");
+        const basePath =
+          process.env.NODE_ENV === "production" ? "/bedrock-textures" : "";
+        const response = await fetch(`${basePath}/texture_list.json`);
         const data: string[] = await response.json();
 
         const formattedData = data.map((path) => {
@@ -70,7 +72,7 @@ export default function Home() {
       setFilteredTextures(textures);
     } else {
       const filtered = textures.filter((texture) =>
-        texture.path.toLowerCase().includes(searchTerm.toLowerCase()),
+        texture.path.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       setFilteredTextures(filtered);
@@ -81,7 +83,7 @@ export default function Home() {
   const totalPages = Math.ceil(filteredTextures.length / itemsPerPage);
   const currentItems = filteredTextures.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const CustomPagination = () => (
